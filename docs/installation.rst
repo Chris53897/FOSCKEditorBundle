@@ -24,37 +24,12 @@ If you choose to not execute the recipe, and if you're using Symfony >= 4.0, upd
         FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
     ];
 
-If you're using Symfony < 4.0, update your ``app/AppKernel.php``:
-
-.. code-block:: php
-
-    class AppKernel extends Kernel
-    {
-        public function registerBundles()
-        {
-            $bundles = array(
-                new FOS\CKEditorBundle\FOSCKEditorBundle(),
-                // ...
-            );
-
-            // ...
-        }
-    }
-
 Download CKEditor
 -----------------
 With bundle's command
 ~~~~~~~~~~~~~~~~~~~~~
 
 Once, you have registered the bundle, you need to install CKEditor:
-
-If you're using Symfony <= 2.8:
-
-.. code-block:: bash
-
-    $ php app/console ckeditor:install
-
-If you're using Symfony >= 3.0:
 
 .. code-block:: bash
 
@@ -72,10 +47,10 @@ You can by running this command:
 .. code-block:: bash
 
     # if you are using NPM as package manager
-    $ npm install --save ckeditor@^4.13.0
+    $ npm install --save ckeditor4@^4.13.0
 
     # if you are using Yarn as package manager
-    $ yarn add ckeditor@^4.13.0
+    $ yarn add ckeditor4@^4.13.0
 
 Once installed, add the following lines to your Webpack Encore configuration file (this excludes the samples directory from the ckeditor node module):
 
@@ -128,12 +103,6 @@ Install the Assets
 Once, you have downloaded CKEditor, you need to install it in the web
 directory.
 
-If you're using Symfony <= 2.8:
-
-.. code-block:: bash
-
-    $ php app/console assets:install web
-
 If you're using Symfony >= 3.0 without Symfony Flex:
 
 .. code-block:: bash
@@ -157,7 +126,6 @@ Finally, add some configuration under the ``twig.form_themes`` config key:
 
 .. code-block:: yaml
 
-    # Symfony 2/3: app/config/config.yml
     # Symfony 4: config/packages/twig.yaml
 
     twig:

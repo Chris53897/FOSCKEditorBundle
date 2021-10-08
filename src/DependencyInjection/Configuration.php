@@ -15,6 +15,7 @@ namespace FOS\CKEditorBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use function assert;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -23,16 +24,10 @@ final class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        if (\method_exists(TreeBuilder::class, 'getRootNode')) {
-            $treeBuilder = new TreeBuilder('fos_ck_editor');
-            $rootNode = $treeBuilder->getRootNode();
-        } else {
-            // BC layer for symfony/config 4.1 and older
-            $treeBuilder = new TreeBuilder();
-            $rootNode = $treeBuilder->root('fos_ck_editor');
-        }
+        $treeBuilder = new TreeBuilder('fos_ck_editor');
 
-        $rootNode
+        $treeBuilder
+            ->getRootNode()
             ->children()
                 ->booleanNode('enable')->defaultTrue()->end()
                 ->booleanNode('async')->defaultFalse()->end()
@@ -124,7 +119,7 @@ final class Configuration implements ConfigurationInterface
             ->scalarPrototype()
             ->end();
 
-        \assert($node instanceof ArrayNodeDefinition);
+        assert($node instanceof ArrayNodeDefinition);
 
         return $node;
     }
@@ -158,16 +153,10 @@ final class Configuration implements ConfigurationInterface
 
     private function createNode(string $name): ArrayNodeDefinition
     {
-        if (\method_exists(TreeBuilder::class, 'getRootNode')) {
-            $treeBuilder = new TreeBuilder($name);
-            $node = $treeBuilder->getRootNode();
-        } else {
-            // BC layer for symfony/config 4.1 and older
-            $treeBuilder = new TreeBuilder();
-            $node = $treeBuilder->root($name);
-        }
+        $treeBuilder = new TreeBuilder($name);
+        $node = $treeBuilder->getRootNode();
 
-        \assert($node instanceof ArrayNodeDefinition);
+        assert($node instanceof ArrayNodeDefinition);
 
         return $node;
     }

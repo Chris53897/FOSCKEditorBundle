@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.0.0
+### Removed
+- Dropped Support for PHP < 8
+
 ## [1.1.0](https://github.com/FriendsOfSymfony/FOSCKEditorBundle/compare/1.0.0...1.1.0) - 2018-05-25
 ### Added
 - Deprecation message for IvoryCKEditorBundle

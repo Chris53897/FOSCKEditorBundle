@@ -23,10 +23,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class CKEditorInstallerCommandTest extends TestCase
 {
-    /**
-     * @var Application
-     */
-    private $application;
+    private Application $application;
 
     protected function setUp(): void
     {

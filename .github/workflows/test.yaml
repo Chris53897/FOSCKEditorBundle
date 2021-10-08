@@ -11,15 +11,12 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - 7.2
-                    - 7.3
-                    - 7.4
                     - 8.0
-                phpunit: [8.5]
+                phpunit: [9.5]
                 dependencies: [highest]
                 include:
-                    - php-version: 7.1
-                      phpunit: 7.5
+                    - php-version: 8.0
+                      phpunit: 9.5
                       dependencies: lowest
 
         steps:

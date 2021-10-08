@@ -21,11 +21,11 @@ final class ConfigException extends RuntimeException implements FOSCKEditorExcep
 {
     public static function configDoesNotExist(string $name): self
     {
-        return new static(sprintf('The CKEditor config "%s" does not exist.', $name));
+        return new ConfigException(sprintf('The CKEditor config "%s" does not exist.', $name));
     }
 
     public static function invalidDefaultConfig(string $name): self
     {
-        return new static(sprintf('The default config "%s" does not exist.', $name));
+        return new ConfigException(sprintf('The default config "%s" does not exist.', $name));
     }
 }

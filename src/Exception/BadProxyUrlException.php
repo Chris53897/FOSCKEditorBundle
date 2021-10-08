@@ -21,6 +21,6 @@ final class BadProxyUrlException extends RuntimeException implements FOSCKEditor
 {
     public static function fromEnvUrl(string $url): self
     {
-        return new static(sprintf('Unable to parse provided proxy url "%s".', $url));
+        return new BadProxyUrlException(sprintf('Unable to parse provided proxy url "%s".', $url));
     }
 }

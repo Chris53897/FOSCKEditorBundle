@@ -20,16 +20,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class TestContainerPass implements CompilerPassInterface
 {
-    /**
-     * An array of service id's which should be public in a test scenario.
-     *
-     * @var array
-     */
-    private $services = [];
-
-    public function __construct(array $services = [])
+    public function __construct(private array $services = [])
     {
-        $this->services = $services;
     }
 
     public function process(ContainerBuilder $container): void

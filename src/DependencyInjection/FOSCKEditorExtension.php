@@ -22,12 +22,12 @@ use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
  */
 final class FOSCKEditorExtension extends ConfigurableExtension
 {
-    protected function loadInternal(array $config, ContainerBuilder $container): void
+    protected function loadInternal(array $mergedConfig, ContainerBuilder $container): void
     {
         $this->loadResources($container);
 
         $container->getDefinition('fos_ck_editor.configuration')
-            ->setArgument(0, $config);
+            ->setArgument(0, $mergedConfig);
 
         $bundles = $container->getParameter('kernel.bundles');
 

@@ -65,20 +65,9 @@ final class CKEditorInstaller
 
     const NOTIFY_EXTRACT_SIZE = 'extract-size';
 
-    /**
-     * @var string
-     */
-    private static $archive = 'https://github.com/ckeditor/ckeditor-releases/archive/%s/%s.zip';
-
-    /**
-     * @var string
-     */
-    private static $customBuildArchive = 'https://ckeditor.com/cke4/builder/download/%s';
-
-    /**
-     * @var OptionsResolver
-     */
-    private $resolver;
+    private static string $archive = 'https://github.com/ckeditor/ckeditor4-releases/archive/%s/%s.zip';
+    private static string $customBuildArchive = 'https://ckeditor.com/cke4/builder/download/%s';
+    private OptionsResolver $resolver;
 
     public function __construct(array $options = [])
     {
@@ -124,7 +113,7 @@ final class CKEditorInstaller
         }
 
         if (null === $options['clear'] && null !== $options['notifier']) {
-            $options['clear'] = $this->notify($options['notifier'], self::NOTIFY_CLEAR, $options['path']);
+            $options['clear'] = $this->notify(self::NOTIFY_CLEAR, $options['path']);
         }
 
         if (null === $options['clear']) {
@@ -137,11 +126,11 @@ final class CKEditorInstaller
                 \RecursiveIteratorIterator::CHILD_FIRST
             );
 
-            $this->notify($options['notifier'], self::NOTIFY_CLEAR_SIZE, iterator_count($files));
+            $this->notify(self::NOTIFY_CLEAR_SIZE, $options['notifier'], iterator_count($files));
 
             foreach ($files as $file) {
                 $filePath = $file->getRealPath();
-                $this->notify($options['notifier'], self::NOTIFY_CLEAR_PROGRESS, $filePath);
+                $this->notify(self::NOTIFY_CLEAR_PROGRESS, $options['notifier'], $filePath);
 
                 if ($dir = $file->isDir()) {
                     $success = @rmdir($filePath);
@@ -154,7 +143,7 @@ final class CKEditorInstaller
                 }
             }
 
-            $this->notify($options['notifier'], self::NOTIFY_CLEAR_COMPLETE);
+            $this->notify(self::NOTIFY_CLEAR_COMPLETE, $options['notifier']);
         }
 
         return $options['clear'];
@@ -163,7 +152,7 @@ final class CKEditorInstaller
     private function download(array $options): string
     {
         $url = $this->getDownloadUrl($options);
-        $this->notify($options['notifier'], self::NOTIFY_DOWNLOAD, $url);
+        $this->notify(self::NOTIFY_DOWNLOAD, $options['notifier'], $url);
 
         $zip = @file_get_contents($url, false, $this->createStreamContext($options['notifier']));
 
@@ -177,7 +166,7 @@ final class CKEditorInstaller
             throw $this->createException(sprintf('Unable to write CKEditor ZIP archive to "%s".', $path));
         }
 
-        $this->notify($options['notifier'], self::NOTIFY_DOWNLOAD_COMPLETE, $path);
+        $this->notify(self::NOTIFY_DOWNLOAD_COMPLETE, $options['notifier'], $path);
 
         return $path;
     }
@@ -236,12 +225,12 @@ final class CKEditorInstaller
 
                 switch ($code) {
                     case STREAM_NOTIFY_FILE_SIZE_IS:
-                        $this->notify($notifier, self::NOTIFY_DOWNLOAD_SIZE, $size);
+                        $this->notify(self::NOTIFY_DOWNLOAD_SIZE, $notifier, $size);
 
                         break;
 
                     case STREAM_NOTIFY_PROGRESS:
-                        $this->notify($notifier, self::NOTIFY_DOWNLOAD_PROGRESS, $transferred);
+                        $this->notify(self::NOTIFY_DOWNLOAD_PROGRESS, $notifier, $transferred);
 
                         break;
                 }
@@ -251,12 +240,12 @@ final class CKEditorInstaller
 
     private function extract(string $path, array $options): void
     {
-        $this->notify($options['notifier'], self::NOTIFY_EXTRACT, $options['path']);
+        $this->notify(self::NOTIFY_EXTRACT, $options['notifier'], $options['path']);
 
         $zip = new \ZipArchive();
         $zip->open($path);
 
-        $this->notify($options['notifier'], self::NOTIFY_EXTRACT_SIZE, $zip->numFiles);
+        $this->notify(self::NOTIFY_EXTRACT_SIZE, $options['notifier'], $zip->numFiles);
 
         if (self::RELEASE_CUSTOM === $options['release']) {
             $offset = 9;
@@ -275,8 +264,8 @@ final class CKEditorInstaller
 
         $zip->close();
 
-        $this->notify($options['notifier'], self::NOTIFY_EXTRACT_COMPLETE);
-        $this->notify($options['notifier'], self::NOTIFY_CLEAR_ARCHIVE, $path);
+        $this->notify(self::NOTIFY_EXTRACT_COMPLETE, $options['notifier']);
+        $this->notify(self::NOTIFY_CLEAR_ARCHIVE, $options['notifier'], $path);
 
         if (!@unlink($path)) {
             throw $this->createException(sprintf('Unable to remove the CKEditor ZIP archive "%s".', $path));
@@ -285,13 +274,13 @@ final class CKEditorInstaller
 
     private function extractFile(string $file, string $rewrite, string $origin, array $options): void
     {
-        $this->notify($options['notifier'], self::NOTIFY_EXTRACT_PROGRESS, $rewrite);
+        $this->notify(self::NOTIFY_EXTRACT_PROGRESS, $options['notifier'], $rewrite);
 
         $from = 'zip://'.$origin.'#'.$file;
         $to = $options['path'].'/'.$rewrite;
 
         foreach ($options['excludes'] as $exclude) {
-            if (0 === strpos(ltrim($rewrite, '\\/'), $exclude)) {
+            if (str_starts_with(ltrim($rewrite, '\\/'), $exclude)) {
                 return;
             }
         }
@@ -306,16 +295,13 @@ final class CKEditorInstaller
         }
     }
 
-    /**
-     * @param mixed $data
-     *
-     * @return mixed
-     */
-    private function notify(callable $notifier = null, string $type, $data = null)
+    private function notify(string $type, callable $notifier = null, mixed $data = null): mixed
     {
         if (null !== $notifier) {
             return $notifier($type, $data);
         }
+
+        return null;
     }
 
     private function createException(string $message): \RuntimeException

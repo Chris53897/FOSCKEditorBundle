@@ -26,14 +26,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class CKEditorType extends AbstractType
 {
-    /**
-     * @var CKEditorConfigurationInterface
-     */
-    private $configuration;
-
-    public function __construct(CKEditorConfigurationInterface $configuration)
+    public function __construct(private CKEditorConfigurationInterface $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -43,6 +37,8 @@ final class CKEditorType extends AbstractType
         if (!$options['enable']) {
             return;
         }
+
+        #$builder->setAttributes();
 
         $builder->setAttribute('async', $options['async']);
         $builder->setAttribute('autoload', $options['autoload']);
@@ -146,7 +142,7 @@ final class CKEditorType extends AbstractType
             ->addAllowedTypes('styles', 'array')
             ->addAllowedTypes('templates', 'array')
             ->setNormalizer('base_path', function (Options $options, $value) {
-                if ('/' !== substr($value, -1)) {
+                if (!str_ends_with($value, '/')) {
                     $value .= '/';
                 }
 

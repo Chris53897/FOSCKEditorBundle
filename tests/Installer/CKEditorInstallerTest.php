@@ -21,20 +21,9 @@ use PHPUnit\Framework\TestCase;
  */
 class CKEditorInstallerTest extends TestCase
 {
-    /**
-     * @var CKEditorInstaller
-     */
-    private $installer;
-
-    /**
-     * @var string
-     */
-    private $path;
-
-    /**
-     * @var string
-     */
-    private $proxy;
+    private CKEditorInstaller $installer;
+    private string $path;
+    private string $proxy;
 
     protected function setUp(): void
     {
@@ -84,7 +73,7 @@ class CKEditorInstallerTest extends TestCase
     public function testInstallWithCustomBuildWithInvalidVersion(): void
     {
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessageRegExp('/Specifying version for custom build is not supported/');
+        $this->expectExceptionMessageMatches('/Specifying version for custom build is not supported/');
 
         $this->installer->install($options = ['release' => CKEditorInstaller::RELEASE_CUSTOM, 'custom_build_id' => '459c358ccf2e34f083e3c8847d3af23e', 'version' => '4.11.4']);
     }
@@ -92,7 +81,7 @@ class CKEditorInstallerTest extends TestCase
     public function testInstallWithCustomBuildWithMissingId(): void
     {
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessageRegExp('/Custom build ID is not specified/');
+        $this->expectExceptionMessageMatches('/Custom build ID is not specified/');
 
         $this->installer->install($options = ['release' => CKEditorInstaller::RELEASE_CUSTOM]);
     }
@@ -262,13 +251,13 @@ class CKEditorInstallerTest extends TestCase
 
             case CKEditorInstaller::RELEASE_BASIC:
                 $this->assertFileExists($this->path.'/plugins/link');
-                $this->assertFileNotExists($this->path.'/plugins/image');
+                $this->assertFileDoesNotExist($this->path.'/plugins/image');
 
                 break;
 
             case CKEditorInstaller::RELEASE_STANDARD:
                 $this->assertFileExists($this->path.'/plugins/image');
-                $this->assertFileNotExists($this->path.'/plugins/copyformatting');
+                $this->assertFileDoesNotExist($this->path.'/plugins/copyformatting');
 
                 break;
         }
@@ -283,13 +272,10 @@ class CKEditorInstallerTest extends TestCase
         $this->assertSame($version, $package['version']);
     }
 
-    /**
-     * @param string[] $excludes
-     */
     private function assertExcludes(array $excludes): void
     {
         foreach ($excludes as $exclude) {
-            $this->assertFileNotExists($this->path.'/'.$exclude);
+            $this->assertFileDoesNotExist($this->path.'/'.$exclude);
         }
     }
 }

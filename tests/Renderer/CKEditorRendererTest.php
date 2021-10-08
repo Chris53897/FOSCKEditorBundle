@@ -24,46 +24,21 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\MockBuilder;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
 class CKEditorRendererTest extends TestCase
 {
-    /**
-     * @var CKEditorRenderer
-     */
-    private $renderer;
-
-    /**
-     * @var ContainerInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $container;
-
-    /**
-     * @var Packages|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $packages;
-
-    /**
-     * @var Request|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $request;
-
-    /**
-     * @var RequestStack|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $requestStack;
-
-    /**
-     * @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $router;
-
-    /**
-     * @var Environment|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $twig;
+    private mixed $renderer;
+    private mixed $container;
+    private mixed $packages;
+    private mixed $request;
+    private mixed $requestStack;
+    private mixed $router;
+    private mixed $twig;
 
     protected function setUp(): void
     {
@@ -182,10 +157,6 @@ class CKEditorRendererTest extends TestCase
     }
 
     /**
-     * @param string[] $paths
-     * @param string[] $assets
-     * @param string[] $urls
-     *
      * @dataProvider filesAssetProvider
      */
     public function testRenderWidgetWithArrayContentsCss(array $paths, array $assets, array $urls): void

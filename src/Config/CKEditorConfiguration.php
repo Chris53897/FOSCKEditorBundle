@@ -16,7 +16,7 @@ use FOS\CKEditorBundle\Exception\ConfigException;
 
 final class CKEditorConfiguration implements CKEditorConfigurationInterface
 {
-    private $toolbarItems = [
+    private array $toolbarItems = [
         'basic.about' => ['About'],
         'basic.basic_styles' => ['Bold', 'Italic'],
         'basic.links' => ['Link', 'Unlink'],
@@ -120,7 +120,7 @@ final class CKEditorConfiguration implements CKEditorConfigurationInterface
     /**
      * @var bool
      */
-    private $enable;
+    private mixed $enable;
 
     /**
      * @var bool
@@ -165,7 +165,7 @@ final class CKEditorConfiguration implements CKEditorConfigurationInterface
     /**
      * @var string
      */
-    private $basePath;
+    private string $basePath;
 
     /**
      * @var string
@@ -182,25 +182,11 @@ final class CKEditorConfiguration implements CKEditorConfigurationInterface
      */
     private $defaultConfig;
 
-    /**
-     * @var array
-     */
-    private $configs;
 
-    /**
-     * @var array
-     */
-    private $templates;
-
-    /**
-     * @var array
-     */
-    private $styles;
-
-    /**
-     * @var array
-     */
-    private $plugins;
+    private array $configs;
+    private array $templates;
+    private array $styles;
+    private array $plugins;
 
     public function __construct(array $config)
     {
@@ -274,7 +260,7 @@ final class CKEditorConfiguration implements CKEditorConfigurationInterface
         $items = [];
 
         foreach ($this->toolbarConfigs[$name] as $name => $item) {
-            $items[] = is_string($item) && '@' === substr($item, 0, 1)
+            $items[] = is_string($item) && str_starts_with($item, '@')
                 ? $this->toolbarItems[(substr($item, 1))]
                 : $item;
         }

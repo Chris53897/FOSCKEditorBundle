@@ -28,6 +28,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -35,50 +36,15 @@ use Twig\Environment;
  */
 abstract class AbstractFOSCKEditorExtensionTest extends TestCase
 {
-    /**
-     * @var ContainerBuilder
-     */
-    private $container;
-
-    /**
-     * @var Packages|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $packages;
-
-    /**
-     * @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $router;
-
-    /**
-     * @var FormRendererInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $formRenderer;
-
-    /**
-     * @var PropertyAccessorInterface|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $propertyAccessor;
-
-    /**
-     * @var RequestStack|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $requestStack;
-
-    /**
-     * @var Environment
-     */
-    private $twig;
-
-    /**
-     * @var FormFactoryBuilderInterface
-     */
-    private $factory;
-
-    /**
-     * @var string
-     */
-    private $formType;
+    private ContainerBuilder $container;
+    private mixed $packages;
+    private mixed $router;
+    private mixed $formRenderer;
+    private mixed $propertyAccessor;
+    private mixed $requestStack;
+    private mixed $twig;
+    private mixed $factory;
+    private string $formType;
 
     protected function setUp(): void
     {

@@ -22,10 +22,7 @@ use PHPUnit\Framework\TestCase;
  */
 class FOSCKEditorBundleTest extends TestCase
 {
-    /**
-     * @var FOSCKEditorBundle
-     */
-    private $bundle;
+    private FOSCKEditorBundle $bundle;
 
     protected function setUp(): void
     {
