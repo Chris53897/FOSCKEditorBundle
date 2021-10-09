@@ -120,7 +120,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
                 if (isset($rawTemplate['template'])) {
                     $rawTemplate['html'] = $this->twig->render(
                         $rawTemplate['template'],
-                        isset($rawTemplate['template_parameters']) ? $rawTemplate['template_parameters'] : []
+                        $rawTemplate['template_parameters'] ?? []
                     );
                 }
 
@@ -137,7 +137,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
 
     private function fixConfigLanguage(array $config): array
     {
-        if (!isset($config['language']) && null !== ($language = $this->getLanguage())) {
+        if (!isset($config['language']) && (null !== ($language = $this->getLanguage()))) {
             $config['language'] = $language;
         }
 
@@ -242,8 +242,13 @@ final class CKEditorRenderer implements CKEditorRendererInterface
     {
         $request = $this->requestStack->getCurrentRequest();
 
-        if (null !== $request) {
-            return $request->getLocale();
+        if ($request) {
+            $locale = $request->getLocale();
+            if ($locale=="" or $locale=="string") {
+                return null;
+            } else {
+                return $locale;
+            }
         }
 
         return $this->locale;

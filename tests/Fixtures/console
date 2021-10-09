@@ -14,6 +14,8 @@
 use FOS\CKEditorBundle\Command\CKEditorInstallerCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
+use FOS\CKEditorBundle\Installer\CKEditorInstaller;
+
 
 require_once __DIR__.'/../../vendor/autoload.php';
 

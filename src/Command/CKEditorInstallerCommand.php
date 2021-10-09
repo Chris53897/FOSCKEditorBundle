@@ -119,6 +119,8 @@ EOF
         }
 
         return 0;
+        // after Symfony 4 support is dropped
+        // return Command::SUCCESS;
     }
 
     private function createOptions(InputInterface $input, OutputInterface $output): array

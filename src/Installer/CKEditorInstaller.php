@@ -12,6 +12,7 @@
 
 namespace FOS\CKEditorBundle\Installer;
 
+use FilesystemIterator;
 use FOS\CKEditorBundle\Exception\BadProxyUrlException;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -122,7 +123,7 @@ final class CKEditorInstaller
 
         if (self::CLEAR_DROP === $options['clear']) {
             $files = new \RecursiveIteratorIterator(
-                new \RecursiveDirectoryIterator($options['path'], \RecursiveDirectoryIterator::SKIP_DOTS),
+                new \RecursiveDirectoryIterator($options['path'], FilesystemIterator::SKIP_DOTS),
                 \RecursiveIteratorIterator::CHILD_FIRST
             );
 

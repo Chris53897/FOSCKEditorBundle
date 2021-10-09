@@ -21,7 +21,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Form\FormFactoryBuilderInterface;
 use Symfony\Component\Form\FormRendererInterface;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\HttpFoundation\RequestStack;

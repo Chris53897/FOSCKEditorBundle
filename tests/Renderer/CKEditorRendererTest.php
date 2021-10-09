@@ -17,15 +17,12 @@ use FOS\CKEditorBundle\Renderer\CKEditorRenderer;
 use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Asset\Packages;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
-use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\MockObject\MockBuilder;
 
 /**
  * @author GeLo <geloen.eric@gmail.com>
@@ -131,7 +128,8 @@ class CKEditorRendererTest extends TestCase
         $this->request
             ->expects($this->once())
             ->method('getLocale')
-            ->will($this->returnValue(null));
+            ->will($this->returnValue("string"));
+            #->will($this->returnValue(null));
 
         $this->assertSame(
             'CKEDITOR.replace("foo", []);',
