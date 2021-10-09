@@ -114,7 +114,7 @@ final class CKEditorInstaller
         }
 
         if (null === $options['clear'] && null !== $options['notifier']) {
-            $options['clear'] = $this->notify(self::NOTIFY_CLEAR, $options['path']);
+            $options['clear'] = $this->notify(self::NOTIFY_CLEAR, $options['notifier'], $options['path']);
         }
 
         if (null === $options['clear']) {
