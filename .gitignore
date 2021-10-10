@@ -1,6 +1,7 @@
 # Composer
 /composer.lock
 /vendor
+/composer.phar
 
 # Docker
 /.env
@@ -10,8 +11,12 @@
 
 # PHPUnit
 /build
+/phpunit.phar
 /phpunit.xml
 .phpunit.result.cache
 
 # Documentation
 /docs/_build/*
+
+# IDE
+.idea
