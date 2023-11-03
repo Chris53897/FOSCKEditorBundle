@@ -65,20 +65,11 @@ final class CKEditorInstaller
 
     const NOTIFY_EXTRACT_SIZE = 'extract-size';
 
-    /**
-     * @var string
-     */
-    private static $archive = 'https://github.com/ckeditor/ckeditor4-releases/archive/%s/%s.zip';
+    private static string $archive = 'https://github.com/ckeditor/ckeditor4-releases/archive/%s/%s.zip';
 
-    /**
-     * @var string
-     */
-    private static $customBuildArchive = 'https://ckeditor.com/cke4/builder/download/%s';
+    private static string $customBuildArchive = 'https://ckeditor.com/cke4/builder/download/%s';
 
-    /**
-     * @var OptionsResolver
-     */
-    private $resolver;
+    private OptionsResolver $resolver;
 
     public function __construct(array $options = [])
     {

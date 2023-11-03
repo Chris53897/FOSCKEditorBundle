@@ -24,50 +24,14 @@ use Twig\Environment;
  */
 final class CKEditorRenderer implements CKEditorRendererInterface
 {
-    /**
-     * @var JsonBuilder
-     */
-    private $jsonBuilder;
-
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
-     * @var Packages
-     */
-    private $assetsPackages;
-
-    /**
-     * @var Environment
-     */
-    private $twig;
-
-    /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
-    /**
-     * @var string|null
-     */
-    private $locale;
-
     public function __construct(
-        JsonBuilder $jsonBuilder,
-        RouterInterface $router,
-        Packages $packages,
-        RequestStack $requestStack,
-        Environment $twig,
-        $locale = null
+        private readonly JsonBuilder  $jsonBuilder,
+        private RouterInterface       $router,
+        private readonly Packages     $assetsPackages,
+        private readonly RequestStack $requestStack,
+        private readonly Environment  $twig,
+        private readonly mixed $locale = null
     ) {
-        $this->jsonBuilder = $jsonBuilder;
-        $this->router = $router;
-        $this->assetsPackages = $packages;
-        $this->twig = $twig;
-        $this->requestStack = $requestStack;
-        $this->locale = $locale;
     }
 
     public function renderBasePath(string $basePath): string
@@ -86,7 +50,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
         $config = $this->fixConfigContentsCss($config);
         $config = $this->fixConfigFilebrowsers(
             $config,
-            isset($options['filebrowsers']) ? $options['filebrowsers'] : []
+            $options['filebrowsers'] ?? []
         );
 
         $autoInline = isset($options['auto_inline']) && !$options['auto_inline']
@@ -156,7 +120,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
                 if (isset($rawTemplate['template'])) {
                     $rawTemplate['html'] = $this->twig->render(
                         $rawTemplate['template'],
-                        isset($rawTemplate['template_parameters']) ? $rawTemplate['template_parameters'] : []
+                        $rawTemplate['template_parameters'] ?? []
                     );
                 }
 
@@ -223,8 +187,8 @@ final class CKEditorRenderer implements CKEditorRendererInterface
             } elseif (isset($config[$route])) {
                 $config[$url] = $this->router->generate(
                     $config[$route],
-                    isset($config[$routeParameters]) ? $config[$routeParameters] : [],
-                    isset($config[$routeType]) ? $config[$routeType] : UrlGeneratorInterface::ABSOLUTE_PATH
+                    $config[$routeParameters] ?? [],
+                    $config[$routeType] ?? UrlGeneratorInterface::ABSOLUTE_PATH
                 );
             }
 
@@ -267,7 +231,7 @@ final class CKEditorRenderer implements CKEditorRendererInterface
 
         $url = $this->assetsPackages->getUrl($path);
 
-        if ('/' === substr($path, -1) && false !== ($position = strpos($url, '?'))) {
+        if (str_ends_with($path, '/') && false !== ($position = strpos($url, '?'))) {
             $url = substr($url, 0, (int) $position);
         }
 

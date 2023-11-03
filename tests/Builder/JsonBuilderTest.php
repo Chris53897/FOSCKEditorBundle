@@ -21,10 +21,7 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
  */
 class JsonBuilderTest extends TestCase
 {
-    /**
-     * @var JsonBuilder
-     */
-    private $jsonBuilder;
+    private JsonBuilder $jsonBuilder;
 
     protected function setUp(): void
     {

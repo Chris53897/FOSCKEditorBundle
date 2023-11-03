@@ -26,20 +26,9 @@ use Symfony\Component\Form\Forms;
  */
 class CKEditorTypeTest extends TestCase
 {
-    /**
-     * @var FormFactoryInterface
-     */
-    private $factory;
-
-    /**
-     * @var CKEditorType
-     */
-    private $ckEditorType;
-
-    /**
-     * @var string
-     */
-    private $formType;
+    private FormFactoryInterface $factory;
+    private CKEditorType $ckEditorType;
+    private string $formType;
 
     protected function setUp(): void
     {

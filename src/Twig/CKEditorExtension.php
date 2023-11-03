@@ -21,14 +21,8 @@ use Twig\TwigFunction;
  */
 final class CKEditorExtension extends AbstractExtension implements CKEditorRendererInterface
 {
-    /**
-     * @var CKEditorRendererInterface
-     */
-    private $renderer;
-
-    public function __construct(CKEditorRendererInterface $renderer)
+    public function __construct(private readonly CKEditorRendererInterface $renderer)
     {
-        $this->renderer = $renderer;
     }
 
     public function getFunctions(): array

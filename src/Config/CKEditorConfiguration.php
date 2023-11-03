@@ -117,90 +117,23 @@ final class CKEditorConfiguration implements CKEditorConfigurationInterface
         ],
     ];
 
-    /**
-     * @var bool
-     */
-    private $enable;
-
-    /**
-     * @var bool
-     */
-    private $async;
-
-    /**
-     * @var bool
-     */
-    private $autoload;
-
-    /**
-     * @var bool
-     */
-    private $autoInline;
-
-    /**
-     * @var bool
-     */
-    private $inline;
-
-    /**
-     * @var bool
-     */
-    private $jquery;
-
-    /**
-     * @var bool
-     */
-    private $requireJs;
-
-    /**
-     * @var bool
-     */
-    private $inputSync;
-
-    /**
-     * @var array
-     */
-    private $filebrowsers;
-
-    /**
-     * @var string
-     */
-    private $basePath;
-
-    /**
-     * @var string
-     */
-    private $jsPath;
-
-    /**
-     * @var string
-     */
-    private $jqueryPath;
-
-    /**
-     * @var string|null
-     */
-    private $defaultConfig;
-
-    /**
-     * @var array
-     */
-    private $configs;
-
-    /**
-     * @var array
-     */
-    private $templates;
-
-    /**
-     * @var array
-     */
-    private $styles;
-
-    /**
-     * @var array
-     */
-    private $plugins;
+    private bool $enable;
+    private bool $async;
+    private bool $autoload;
+    private bool $autoInline;
+    private bool $inline;
+    private bool $jquery;
+    private bool $requireJs;
+    private bool $inputSync;
+    private array $filebrowsers;
+    private string $basePath;
+    private string $jsPath;
+    private string $jqueryPath;
+    private string|null $defaultConfig;
+    private array $configs;
+    private array $templates;
+    private array $styles;
+    private array $plugins;
 
     public function __construct(array $config)
     {

@@ -31,10 +31,7 @@ use Twig\Environment;
  */
 abstract class AbstractTemplateTest extends TestCase
 {
-    /**
-     * @var CKEditorRenderer
-     */
-    protected $renderer;
+    protected CKEditorRenderer $renderer;
 
     /**
      * @var Packages|MockObject

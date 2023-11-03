@@ -13,6 +13,7 @@
 namespace FOS\CKEditorBundle\Command;
 
 use FOS\CKEditorBundle\Installer\CKEditorInstaller;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\QuestionHelper;
@@ -26,25 +27,17 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 /**
  * @author GeLo <geloen.eric@gmail.com>
  */
+#[AsCommand(name: 'ckeditor:install', description: 'Install CKEditor')]
 final class CKEditorInstallerCommand extends Command
 {
-    /**
-     * @var CKEditorInstaller
-     */
-    private $installer;
-
-    public function __construct(CKEditorInstaller $installer)
+    public function __construct(private readonly CKEditorInstaller $installer)
     {
         parent::__construct();
-
-        $this->installer = $installer;
     }
 
     protected function configure(): void
     {
         $this
-            ->setName('ckeditor:install')
-            ->setDescription('Install CKEditor')
             ->addArgument('path', InputArgument::OPTIONAL, 'Where to install CKEditor')
             ->addOption(
                 'release',

@@ -26,14 +26,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class CKEditorType extends AbstractType
 {
-    /**
-     * @var CKEditorConfigurationInterface
-     */
-    private $configuration;
-
-    public function __construct(CKEditorConfigurationInterface $configuration)
+    public function __construct(private readonly CKEditorConfigurationInterface $configuration)
     {
-        $this->configuration = $configuration;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

@@ -17,11 +17,13 @@ use FOS\CKEditorBundle\Exception\ConfigException;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use FOS\CKEditorBundle\FOSCKEditorBundle;
 use FOS\CKEditorBundle\Tests\DependencyInjection\Compiler\TestContainerPass;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Form\FormFactoryBuilderInterface;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormRendererInterface;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -35,33 +37,30 @@ use Twig\Environment;
  */
 abstract class AbstractFOSCKEditorExtensionTest extends TestCase
 {
-    /**
-     * @var ContainerBuilder
-     */
-    private $container;
+    private ContainerBuilder $container;
 
     /**
-     * @var Packages|\PHPUnit_Framework_MockObject_MockObject
+     * @var Packages|MockObject
      */
     private $packages;
 
     /**
-     * @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var RouterInterface|MockObject
      */
     private $router;
 
     /**
-     * @var FormRendererInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var FormRendererInterface|MockObject
      */
     private $formRenderer;
 
     /**
-     * @var PropertyAccessorInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var PropertyAccessorInterface|MockObject
      */
     private $propertyAccessor;
 
     /**
-     * @var RequestStack|\PHPUnit_Framework_MockObject_MockObject
+     * @var RequestStack|MockObject
      */
     private $requestStack;
 
@@ -70,15 +69,9 @@ abstract class AbstractFOSCKEditorExtensionTest extends TestCase
      */
     private $twig;
 
-    /**
-     * @var FormFactoryBuilderInterface
-     */
-    private $factory;
+    private FormFactoryBuilderInterface|FormFactoryInterface $factory;
 
-    /**
-     * @var string
-     */
-    private $formType;
+    private string $formType;
 
     protected function setUp(): void
     {

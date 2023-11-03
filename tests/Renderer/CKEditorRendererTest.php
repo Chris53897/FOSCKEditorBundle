@@ -15,6 +15,7 @@ namespace FOS\CKEditorBundle\Tests\Renderer;
 use FOS\CKEditorBundle\Builder\JsonBuilder;
 use FOS\CKEditorBundle\Renderer\CKEditorRenderer;
 use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -30,38 +31,35 @@ use Twig\Environment;
  */
 class CKEditorRendererTest extends TestCase
 {
-    /**
-     * @var CKEditorRenderer
-     */
-    private $renderer;
+    private CKEditorRenderer $renderer;
 
     /**
-     * @var ContainerInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var ContainerInterface|MockObject
      */
     private $container;
 
     /**
-     * @var Packages|\PHPUnit_Framework_MockObject_MockObject
+     * @var Packages|MockObject
      */
     private $packages;
 
     /**
-     * @var Request|\PHPUnit_Framework_MockObject_MockObject
+     * @var Request|MockObject
      */
     private $request;
 
     /**
-     * @var RequestStack|\PHPUnit_Framework_MockObject_MockObject
+     * @var RequestStack|MockObject
      */
     private $requestStack;
 
     /**
-     * @var RouterInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var RouterInterface|MockObject
      */
     private $router;
 
     /**
-     * @var Environment|\PHPUnit_Framework_MockObject_MockObject
+     * @var Environment|MockObject
      */
     private $twig;
 

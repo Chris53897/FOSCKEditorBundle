@@ -19,30 +19,14 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
  */
 final class JsonBuilder
 {
-    /**
-     * @var PropertyAccessorInterface
-     */
-    private $propertyAccessor;
+    private array $values = [];
 
-    /**
-     * @var array
-     */
-    private $values = [];
+    private array $escapes = [];
 
-    /**
-     * @var array
-     */
-    private $escapes = [];
+    private int $jsonEncodeOptions = 0;
 
-    /**
-     * @var int
-     */
-    private $jsonEncodeOptions = 0;
-
-    public function __construct(PropertyAccessorInterface $propertyAccessor)
+    public function __construct(private readonly PropertyAccessorInterface $propertyAccessor)
     {
-        $this->propertyAccessor = $propertyAccessor;
-
         $this->reset();
     }
 
@@ -83,10 +67,7 @@ final class JsonBuilder
         return $this;
     }
 
-    /**
-     * @param mixed $value
-     */
-    public function setValue(string $path, $value, bool $escapeValue = true): self
+    public function setValue(string $path, mixed $value, bool $escapeValue = true): self
     {
         if (!$escapeValue) {
             $placeholder = uniqid('friendsofsymfony', true);
